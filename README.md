@@ -31,7 +31,6 @@ chmod +x nvim-setup.sh
 # Run it
 ./nvim-setup.sh
 ```
-
 ## What Gets Configured
 
 ### Tmux Configuration
