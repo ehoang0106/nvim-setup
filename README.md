@@ -22,13 +22,13 @@ bash <(curl -fsSL https://raw.githubusercontent.com/ehoang0106/nvim-setup/master
 ### Manual Install
 
 ```bash
-# Download the script
+#download the script
 curl -O https://raw.githubusercontent.com/ehoang0106/nvim-setup/master/nvim-setup.sh
 
-# Make it executable
+#make it executable
 chmod +x nvim-setup.sh
 
-# Run it
+#run
 ./nvim-setup.sh
 ```
 ## What Gets Configured
