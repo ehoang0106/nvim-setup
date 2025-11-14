@@ -2,17 +2,17 @@
 
 set -e #exit on error
 
-echo "==================================="
-echo "Tmux Installation"
-echo "==================================="
-echo ""
-
 #check if running on arch linux
 
 if ! command -v pacman &> /dev/null; then
     echo "Error: This script is only work on arch linux (pacman not found)"
     exit 1
 fi
+
+echo "==================================="
+echo "Tmux Installation"
+echo "==================================="
+echo ""
 
 #check if tmux is already installed
 
