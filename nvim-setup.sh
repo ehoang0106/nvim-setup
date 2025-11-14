@@ -73,9 +73,9 @@ run '~/.tmux/plugins/tpm/tpm'
 EOF
 
 echo "tmux.conf created successfully"
-
 echo "==================================="
-# Install TPM (Tmux Plugin Manager)
+#install tmp
+
 echo ""
 echo "Installing TPM (Tmux Plugin Manager)..."
 
@@ -83,6 +83,124 @@ echo "Cloning TPM repository..."
 git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 
 echo "TPM installed successfully"
+
+# Create Neovim plugin configuration for tmux-navigator
+echo ""
+echo "==================================="
+echo "Setting up Neovim tmux-navigator plugin..."
+echo "==================================="
+
+# Create the plugins directory if it doesn't exist
+mkdir -p ~/.config/nvim/lua/plugins
+
+# Create the nvim-tmux-navigator.lua file
+cat > ~/.config/nvim/lua/plugins/nvim-tmux-navigator.lua << 'EOF'
+return {
+  "christoomey/vim-tmux-navigator",
+  cmd = {
+    "TmuxNavigateLeft",
+    "TmuxNavigateDown",
+    "TmuxNavigateUp",
+    "TmuxNavigateRight",
+    "TmuxNavigatePrevious",
+    "TmuxNavigatorProcessList",
+  },
+  keys = {
+    { "<c-h>", "<cmd><C-U>TmuxNavigateLeft<cr>" },
+    { "<c-j>", "<cmd><C-U>TmuxNavigateDown<cr>" },
+    { "<c-k>", "<cmd><C-U>TmuxNavigateUp<cr>" },
+    { "<c-l>", "<cmd><C-U>TmuxNavigateRight<cr>" },
+    { "<c-\\>", "<cmd><C-U>TmuxNavigatePrevious<cr>" },
+  },
+}
+EOF
+
+echo "Neovim tmux-navigator plugin configured"
+
+# Configure Neovim options
+echo ""
+echo "==================================="
+echo "Configuring Neovim options..."
+echo "==================================="
+
+# Check if options.lua exists
+if [ -f ~/.config/nvim/lua/config/options.lua ]; then
+    echo "Found existing options.lua, updating line number settings..."
+
+    # Check if relativenumber exists and update it
+    if grep -q "vim.opt.relativenumber" ~/.config/nvim/lua/config/options.lua; then
+        sed -i 's/vim\.opt\.relativenumber = .*/vim.opt.relativenumber = true/' ~/.config/nvim/lua/config/options.lua
+        echo "✓ Updated vim.opt.relativenumber = true"
+    else
+        echo "vim.opt.relativenumber = true" >> ~/.config/nvim/lua/config/options.lua
+        echo "✓ Added vim.opt.relativenumber = true"
+    fi
+
+    # Check if number exists, if not add it
+    if ! grep -q "vim.opt.number = true" ~/.config/nvim/lua/config/options.lua; then
+        echo "vim.opt.number = true" >> ~/.config/nvim/lua/config/options.lua
+        echo "✓ Added vim.opt.number = true"
+    else
+        echo "✓ vim.opt.number = true already exists"
+    fi
+else
+    echo "options.lua not found, creating new file..."
+    mkdir -p ~/.config/nvim/lua/config
+    cat > ~/.config/nvim/lua/config/options.lua << 'EOF'
+-- Line numbers
+vim.opt.relativenumber = true
+vim.opt.number = true
+EOF
+    echo "✓ Created options.lua with line number settings"
+fi
+
+echo "✓ Neovim options configured successfully"
+
+# Configure Neovim keymaps
+echo ""
+echo "==================================="
+echo "Configuring Neovim keymaps..."
+echo "==================================="
+
+# Check if keymaps.lua exists
+if [ -f ~/.config/nvim/lua/config/keymaps.lua ]; then
+    echo "Found existing keymaps.lua, updating window split keymaps..."
+
+    # Check if the leader+v keymap exists and update it
+    if grep -q '"<leader>v".*vnew' ~/.config/nvim/lua/config/keymaps.lua; then
+        sed -i 's/vim\.keymap\.set.*"<leader>v".*vnew.*/vim.keymap.set({ "n", "v" }, "<leader>v", ":vnew<CR>")/' ~/.config/nvim/lua/config/keymaps.lua
+        echo "✓ Updated <leader>v keymap"
+    else
+        echo 'vim.keymap.set({ "n", "v" }, "<leader>v", ":vnew<CR>")' >> ~/.config/nvim/lua/config/keymaps.lua
+        echo "✓ Added <leader>v keymap"
+    fi
+
+    # Check if the leader+h keymap exists and update it
+    if grep -q '"<leader>h".*new' ~/.config/nvim/lua/config/keymaps.lua; then
+        sed -i 's/vim\.keymap\.set.*"<leader>h".*new.*/vim.keymap.set({ "n", "v" }, "<leader>h", ":new<CR>")/' ~/.config/nvim/lua/config/keymaps.lua
+        echo "✓ Updated <leader>h keymap"
+    else
+        echo 'vim.keymap.set({ "n", "v" }, "<leader>h", ":new<CR>")' >> ~/.config/nvim/lua/config/keymaps.lua
+        echo "✓ Added <leader>h keymap"
+    fi
+else
+    echo "keymaps.lua not found, creating new file..."
+    mkdir -p ~/.config/nvim/lua/config
+    cat > ~/.config/nvim/lua/config/keymaps.lua << 'EOF'
+-- Window splits
+vim.keymap.set({ "n", "v" }, "<leader>v", ":vnew<CR>")
+vim.keymap.set({ "n", "v" }, "<leader>h", ":new<CR>")
+EOF
+    echo "✓ Created keymaps.lua with window split keymaps"
+fi
+
+echo "✓ Neovim keymaps configured successfully"
+
+echo ""
+echo "==================================="
+echo "Setup Complete!"
+echo "==================================="
+
 
 
 
