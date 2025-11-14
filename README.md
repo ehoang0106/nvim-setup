@@ -16,14 +16,14 @@ A simple bash script to set up tmux and Neovim with seamless integration on Omar
 ### Quick Install (One-liner)
 
 ```bash
-bash <(curl -fsSL https://raw.githubusercontent.com/ehoang0106/nvim-setup/main/nvim-setup.sh)
+bash <(curl -fsSL https://raw.githubusercontent.com/ehoang0106/nvim-setup/master/nvim-setup.sh)
 ```
 
 ### Manual Install
 
 ```bash
 # Download the script
-curl -O https://raw.githubusercontent.com/ehoang0106/nvim-setup/main/nvim-setup.sh
+curl -O https://raw.githubusercontent.com/ehoang0106/nvim-setup/master/nvim-setup.sh
 
 # Make it executable
 chmod +x nvim-setup.sh
